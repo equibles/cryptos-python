@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Stocks
+    Cryptos
 
     <h3>Authentication</h3>                     You need to authenticate to use this API.                     To authenticate click on the \"Authorize\" button and do one of the following steps.<br />                     1. Send your API key in the headers of the request by typing \"Bearer my-key\" on the Bearer authorization scheme.<br />                     2. Send your API key on the \"ApiKey\" query string parameter. To do this type your API key in the Query String authorization scheme.<br />                     Both methods are equally valid. We offer both options so that you can use the method that is easier to use in your application.<br />                     <br />                     <h3>API limits</h3>                     Your API key may be subject to daily/hourly limits. To know how much requests you have left look at the following headers in the response.<br />                     1. <strong>x-ratelimit-limit</strong> - The total number of requests that you are allowed to make in a given period (hour/day)                       2. <strong>x-ratelimit-remaining</strong> - The number of remaining requests that you can perform in the current period.<br />                     3. <strong>x-ratelimit-reset</strong> - The number of seconds until the current period resets.<br />                     <br />                     <h3>Suggestions</h3>                     You don't need to implement the whole API by hand in your programming language of choice.<br />                     Since this API has an OpenAPI specification you can use                      <a href=\"https://github.com/swagger-api/swagger-codegen\" target=\"_blank\">Swagger Generator</a>                      to automatically generate client stubs for more than 30 programming languages.                     <br />                     <br />                     You don't have an API key? <a href=\"https://www.equibles.com/api/pricing\" target=\"_blank\">Get one for free here.</a>  # noqa: E501
 
@@ -32,16 +32,16 @@ class PricesApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def end_of_day(self, full_ticker, **kwargs):  # noqa: E501
-        """Lists the end of day prices for a given stock.  # noqa: E501
+    def end_of_day(self, ticker, **kwargs):  # noqa: E501
+        """Lists the end of day prices for a given cryptocurrency.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.end_of_day(full_ticker, async_req=True)
+        >>> thread = api.end_of_day(ticker, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str full_ticker: The fully qualified ticker of the stock. Example: AAPL.XNAS (required)
+        :param str ticker: The ticker of the cryptocurrency. Example: BTC (for Bitcoin) (required)
         :param datetime start_time: The start time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param datetime end_time: The end time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param int page: The number of the page to request.
@@ -52,21 +52,21 @@ class PricesApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.end_of_day_with_http_info(full_ticker, **kwargs)  # noqa: E501
+            return self.end_of_day_with_http_info(ticker, **kwargs)  # noqa: E501
         else:
-            (data) = self.end_of_day_with_http_info(full_ticker, **kwargs)  # noqa: E501
+            (data) = self.end_of_day_with_http_info(ticker, **kwargs)  # noqa: E501
             return data
 
-    def end_of_day_with_http_info(self, full_ticker, **kwargs):  # noqa: E501
-        """Lists the end of day prices for a given stock.  # noqa: E501
+    def end_of_day_with_http_info(self, ticker, **kwargs):  # noqa: E501
+        """Lists the end of day prices for a given cryptocurrency.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.end_of_day_with_http_info(full_ticker, async_req=True)
+        >>> thread = api.end_of_day_with_http_info(ticker, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str full_ticker: The fully qualified ticker of the stock. Example: AAPL.XNAS (required)
+        :param str ticker: The ticker of the cryptocurrency. Example: BTC (for Bitcoin) (required)
         :param datetime start_time: The start time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param datetime end_time: The end time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param int page: The number of the page to request.
@@ -76,7 +76,7 @@ class PricesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['full_ticker', 'start_time', 'end_time', 'page', 'page_size']  # noqa: E501
+        all_params = ['ticker', 'start_time', 'end_time', 'page', 'page_size']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -91,18 +91,18 @@ class PricesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'full_ticker' is set
-        if ('full_ticker' not in params or
-                params['full_ticker'] is None):
-            raise ValueError("Missing the required parameter `full_ticker` when calling `end_of_day`")  # noqa: E501
+        # verify the required parameter 'ticker' is set
+        if ('ticker' not in params or
+                params['ticker'] is None):
+            raise ValueError("Missing the required parameter `ticker` when calling `end_of_day`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'full_ticker' in params:
-            query_params.append(('fullTicker', params['full_ticker']))  # noqa: E501
+        if 'ticker' in params:
+            query_params.append(('ticker', params['ticker']))  # noqa: E501
         if 'start_time' in params:
             query_params.append(('startTime', params['start_time']))  # noqa: E501
         if 'end_time' in params:
@@ -126,7 +126,7 @@ class PricesApi(object):
         auth_settings = ['Query String']  # noqa: E501
 
         return self.api_client.call_api(
-            '/stocks/prices/endofday', 'GET',
+            '/cryptos/prices/endofday', 'GET',
             path_params,
             query_params,
             header_params,
@@ -141,16 +141,16 @@ class PricesApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def intraday(self, full_ticker, **kwargs):  # noqa: E501
-        """Lists the intraday prices for a given stock with one minute precision.  # noqa: E501
+    def intraday(self, ticker, **kwargs):  # noqa: E501
+        """Lists the intraday prices for a given cryptocurrency with one minute precision.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.intraday(full_ticker, async_req=True)
+        >>> thread = api.intraday(ticker, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str full_ticker: The fully qualified ticker of the stock. Example: AAPL.XNAS (required)
+        :param str ticker: The ticker of the cryptocurrency. Example: BTC (for Bitcoin) (required)
         :param datetime start_time: The start time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param datetime end_time: The end time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param int page: The number of the page to request.
@@ -161,21 +161,21 @@ class PricesApi(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.intraday_with_http_info(full_ticker, **kwargs)  # noqa: E501
+            return self.intraday_with_http_info(ticker, **kwargs)  # noqa: E501
         else:
-            (data) = self.intraday_with_http_info(full_ticker, **kwargs)  # noqa: E501
+            (data) = self.intraday_with_http_info(ticker, **kwargs)  # noqa: E501
             return data
 
-    def intraday_with_http_info(self, full_ticker, **kwargs):  # noqa: E501
-        """Lists the intraday prices for a given stock with one minute precision.  # noqa: E501
+    def intraday_with_http_info(self, ticker, **kwargs):  # noqa: E501
+        """Lists the intraday prices for a given cryptocurrency with one minute precision.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.intraday_with_http_info(full_ticker, async_req=True)
+        >>> thread = api.intraday_with_http_info(ticker, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str full_ticker: The fully qualified ticker of the stock. Example: AAPL.XNAS (required)
+        :param str ticker: The ticker of the cryptocurrency. Example: BTC (for Bitcoin) (required)
         :param datetime start_time: The start time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param datetime end_time: The end time of the window. UTC time formatted according to ISO 8601 (i.e: 2022-02-01T13:45:17)
         :param int page: The number of the page to request.
@@ -185,7 +185,7 @@ class PricesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['full_ticker', 'start_time', 'end_time', 'page', 'page_size']  # noqa: E501
+        all_params = ['ticker', 'start_time', 'end_time', 'page', 'page_size']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -200,18 +200,18 @@ class PricesApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'full_ticker' is set
-        if ('full_ticker' not in params or
-                params['full_ticker'] is None):
-            raise ValueError("Missing the required parameter `full_ticker` when calling `intraday`")  # noqa: E501
+        # verify the required parameter 'ticker' is set
+        if ('ticker' not in params or
+                params['ticker'] is None):
+            raise ValueError("Missing the required parameter `ticker` when calling `intraday`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'full_ticker' in params:
-            query_params.append(('fullTicker', params['full_ticker']))  # noqa: E501
+        if 'ticker' in params:
+            query_params.append(('ticker', params['ticker']))  # noqa: E501
         if 'start_time' in params:
             query_params.append(('startTime', params['start_time']))  # noqa: E501
         if 'end_time' in params:
@@ -235,7 +235,7 @@ class PricesApi(object):
         auth_settings = ['Query String']  # noqa: E501
 
         return self.api_client.call_api(
-            '/stocks/prices/intraday', 'GET',
+            '/cryptos/prices/intraday', 'GET',
             path_params,
             query_params,
             header_params,
